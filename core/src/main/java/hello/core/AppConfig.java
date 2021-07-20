@@ -15,6 +15,10 @@ import hello.core.order.OrderServiceImpl;
 @Configuration
 public class AppConfig {
 	
+	// @Bean memberService -> new MemoryMemberRepository()
+	// @Bean orderService -> new MemoryMemberRepository()
+	
+	
 	@Bean
 	public MemberRepository memberRepository() {
 		return new MemoryMemberRepository();
