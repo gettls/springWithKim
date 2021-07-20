@@ -1,5 +1,7 @@
 package hello.core.order;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import hello.core.discount.DiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
@@ -13,6 +15,7 @@ public class OrderServiceImpl implements OrderService{
 	private DiscountPolicy discountPolicy;
 	private MemberRepository memberRepository;
 	
+	@Autowired
 	public OrderServiceImpl(DiscountPolicy discountPolicy, MemberRepository memberRepository) {
 		this.discountPolicy = discountPolicy;
 		this.memberRepository = memberRepository;
