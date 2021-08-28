@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html th:fragment="layout(title, content)" 
+	xmlns=th:"http://www.thymeleaf.org">
+<head>
+<meta charset="EUC-KR">
+	<title th:replace=${title}>Insert title here</title>
+</head>
+<body>
+
+<h1> 레이아웃 h1 </h1>
+<div th:replace="${content}">
+	<p>레이아웃 컨텐츠</p>
+</div>
+
+<footer>
+	레이아웃 푸터
+</footer>
+
+</body>
+</html>
