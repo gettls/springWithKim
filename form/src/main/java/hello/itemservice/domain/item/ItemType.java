@@ -6,7 +6,11 @@ public enum ItemType {
 	
 	private final String description;
 	
-	private ItemType(String description) {
+	ItemType(String description) {
 		this.description = description;
+	}
+	
+	public String getDescription() {
+		return description;
 	}
 }
