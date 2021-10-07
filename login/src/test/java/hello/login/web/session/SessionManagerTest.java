@@ -9,13 +9,10 @@ import hello.login.domain.member.Member;
 
 class SessionManagerTest {
 
-	
 	SessionManager sessionManager = new SessionManager();
 	
 	@Test
 	void sessionTest() {
-		
-		
 		// 技记 积己
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		Member member = new Member();
