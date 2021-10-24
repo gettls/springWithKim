@@ -8,16 +8,22 @@ import hello.typeconverter.converter.IntegerToStringConverter;
 import hello.typeconverter.converter.IpPortToStringConverter;
 import hello.typeconverter.converter.StringToIntegerConverter;
 import hello.typeconverter.converter.StringToIpPortConverter;
+import hello.typeconverter.formatter.MyNumberFormatter;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
-		registry.addConverter(new StringToIntegerConverter());
+		// 주석처리 우선수위
+		// 숫자 -> 문자, 문자 -> 숫자 포맷터가 있기 때문에
+//		registry.addConverter(new StringToIntegerConverter());
 		registry.addConverter(new StringToIpPortConverter());
-		registry.addConverter(new IntegerToStringConverter());
+//		registry.addConverter(new IntegerToStringConverter());
 		registry.addConverter(new IpPortToStringConverter());
+		
+		// 추가
+		registry.addFormatter(new MyNumberFormatter());
 	}
 	
 }
