@@ -1,7 +1,10 @@
 package hello.crud_ex1.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +22,17 @@ public class MemberRepository {
 	
 	public Member findById(Long id) {
 		return store.get(id);
+	}
+	
+	
+	public List<Member> findAll(){
+		return new ArrayList<Member>(store.values());
+	}
+	
+	public Optional<Member> findByLoginId(String loginId) {
+		return findAll().stream()
+				.filter(m->m.getLoginId().equals(loginId))
+				.findFirst();
 	}
 	
 	public void updateMember(Long id, Member updateMember) {

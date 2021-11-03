@@ -6,27 +6,28 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import hello.crud_ex1.domain.Member;
 import hello.crud_ex1.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/members")
 public class MemberController {
-
+	
 	private final MemberRepository memberRepository;
 	
-	@GetMapping("/members/add")
-	public String register() {
-		return "members/memberRegister";
+	@GetMapping("/add")
+	public String member() {
+		return "members/addForm"; 
 	}
 	
-	@PostMapping("/members/add")
+	@PostMapping("/add")
 	public String save(@Validated @ModelAttribute Member member, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
-			return "members/memberRegister";
+			return "members/addForm";
 		}
 		memberRepository.save(member);
 		return "redirect:/";
