@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import hello.crud_ex1.domain.LoginService;
 import hello.crud_ex1.domain.Member;
+import hello.crud_ex1.web.SessionConst;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -40,7 +41,7 @@ public class LoginController {
 		}
 		
 		HttpSession session = request.getSession();
-		session.setAttribute("loginMember", loginMember);
+		session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 		
 		return "redirect:/";
 	}
