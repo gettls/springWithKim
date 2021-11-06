@@ -1,5 +1,5 @@
-package hello.crud_ex1.domain;
 
+package hello.crud_ex1.domain;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
