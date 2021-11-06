@@ -12,7 +12,9 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import hello.crud_ex1.domain.Member;
 import hello.crud_ex1.web.SessionConst;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver{
 
 	// @Login && Member.class resolver
@@ -20,7 +22,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 	public boolean supportsParameter(MethodParameter parameter) {
 
 		boolean LoginAnnotation = parameter.hasParameterAnnotation(Login.class);
-		boolean MemberClass = Member.class.isAssignableFrom(parameter.getClass());
+		boolean MemberClass = Member.class.isAssignableFrom(parameter.getParameterType());
 		
 		return LoginAnnotation && MemberClass;
 	}
@@ -32,8 +34,10 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 		HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
 		HttpSession session = request.getSession(false);
 		if(session==null) {
+			log.info("no session");
 			return null;
 		}
+		log.info("exists session");
 		return session.getAttribute(SessionConst.LOGIN_MEMBER);
 	}
 

@@ -20,14 +20,14 @@ public class MemberController {
 	private final MemberRepository memberRepository;
 	
 	@GetMapping("/add")
-	public String member() {
-		return "members/addForm"; 
+	public String member(@ModelAttribute Member member) {
+		return "members/MemberAddForm"; 
 	}
 	
 	@PostMapping("/add")
 	public String save(@Validated @ModelAttribute Member member, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
-			return "members/addForm";
+			return "members/MemberAddForm";
 		}
 		memberRepository.save(member);
 		return "redirect:/";
