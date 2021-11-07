@@ -12,13 +12,16 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				<button class="w-100 btn btn-secondary btn-lg" type="button"
-					th:onclick="|location.href='@{/schedule/*{memberId}}'|">스케줄</button>
+				<button class="w-100 btn btn-secondary btn-lg"
+					th:onclick="|location.href='@{|schedule/${member.id}|}'|"
+					type="button">스케줄</button>
 			</div>
 			<div class="col">
+				<form th:action="@{/logout}" method="post">
 				<button class="w-100 btn btn-dark btn-lg"
-					onclick="location.href='items.html'"
-					th:onclick="|location.href='@{/logout}'|" type="button"> 로그아웃 </button>
+					onclick="location.href='home.html'"
+					type="submit"> 로그아웃 </button>
+					</form>
 			</div>
 		</div>
 		<hr class="my-4">
