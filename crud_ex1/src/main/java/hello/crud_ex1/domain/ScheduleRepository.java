@@ -2,6 +2,7 @@ package hello.crud_ex1.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -9,7 +10,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
+//@Repository
 public class ScheduleRepository {
 
 	private static Map<Long, Schedule> store = new HashMap<>();
@@ -40,6 +41,7 @@ public class ScheduleRepository {
 		findOne.setDate(updateParam.getDate());
 		findOne.setName(updateParam.getName());
 	}
+	
 	
 	public void clear() {
 		store.clear();

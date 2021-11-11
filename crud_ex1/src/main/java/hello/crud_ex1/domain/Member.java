@@ -1,16 +1,28 @@
 
 package hello.crud_ex1.domain;
-import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
-import lombok.Data;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter @Setter
 public class Member {
+	@Id @GeneratedValue
+	@Column(name="MEMBER_ID")
 	private Long id;
-	@NotEmpty
+	
 	private String name;
-	@NotEmpty
 	private String loginId;
-	@NotEmpty
 	private String password;
+	
+	@OneToMany(mappedBy = "member")
+	private List<Schedule> schdules = new ArrayList<Schedule>();
 }
