@@ -1,6 +1,11 @@
 package jpabook.jpashop.repository;
 
+import jpabook.jpashop.api.OrderSimpleApiController;
+import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.OrderStatus;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDto;
+import lombok.Data;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -8,6 +13,8 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +45,7 @@ public class OrderRepository {
             String jpql = "select o from Order o join o.member m";
             boolean isFirstCondition = true;
 
-        //주문 상태 검색
+        //二쇰Ц �긽�깭 寃��깋
         if (orderSearch.getOrderStatus() != null) {
             if (isFirstCondition) {
                 jpql += " where";
@@ -49,7 +56,7 @@ public class OrderRepository {
             jpql += " o.status = :status";
         }
 
-        //회원 이름 검색
+        //�쉶�썝 �씠由� 寃��깋
         if (StringUtils.hasText(orderSearch.getMemberName())) {
             if (isFirstCondition) {
                 jpql += " where";
@@ -84,12 +91,12 @@ public class OrderRepository {
 
         List<Predicate> criteria = new ArrayList<>();
 
-        //주문 상태 검색
+        //二쇰Ц �긽�깭 寃��깋
         if (orderSearch.getOrderStatus() != null) {
             Predicate status = cb.equal(o.get("status"), orderSearch.getOrderStatus());
             criteria.add(status);
         }
-        //회원 이름 검색
+        //�쉶�썝 �씠由� 寃��깋
         if (StringUtils.hasText(orderSearch.getMemberName())) {
             Predicate name =
                     cb.like(m.<String>get("name"), "%" + orderSearch.getMemberName() + "%");
@@ -102,11 +109,11 @@ public class OrderRepository {
     }
 
     public List<Order> findAllWithMemberDelivery() {
-        return em.createQuery(
-                "select o from Order o" +
-                        " join fetch o.member m" +
-                        " join fetch o.delivery d", Order.class)
-                .getResultList();
+    	return em.createQuery(
+    			"select o from Order o" 
+    			+ "join fetch o.member m"
+    			+ "join fetch o.delivery", Order.class)
+    			.getResultList(); 
     }
 
     public List<Order> findAllWithItem() {
@@ -128,5 +135,7 @@ public class OrderRepository {
                 .setMaxResults(limit)
                 .getResultList();
     }
+   
+    
 }
 
