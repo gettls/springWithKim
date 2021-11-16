@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.BatchSize;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +25,7 @@ public class Member {
 	private String name;
 	private String loginId;
 	private String password;
+	
 	
 	@OneToMany(mappedBy = "member")
 	private List<Schedule> schdules = new ArrayList<Schedule>();

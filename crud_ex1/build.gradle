@@ -12,6 +12,9 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
 }
 
 repositories {
@@ -29,6 +32,9 @@ dependencies {
 	// for jpa
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	runtimeOnly 'com.h2database:h2'
+	
+	// for devtools
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 test {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,6 @@ public class ScheduleRepository {
 	public void save(Schedule schedule) {
 		log.info("add schedule");
 		em.persist(schedule);
-		em.flush();
 	}
 	
 	public Schedule findOne(Long id) {
@@ -36,8 +36,8 @@ public class ScheduleRepository {
 	}
 	
 	public void delete(Long id) {
-		em.createQuery("delete from Schedule s where s.id = :id")
-			.setParameter("id", id);
+		log.info("delete from repo");
+		em.createQuery("delete from Schedule s where s.id = :id").setParameter("id", id).executeUpdate();
 	}
 	
 	public List<Schedule> findByMember(Member member){

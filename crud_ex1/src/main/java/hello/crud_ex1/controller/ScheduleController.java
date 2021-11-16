@@ -105,4 +105,18 @@ public class ScheduleController {
 		return "redirect:/schedule/{memberId}";
 	}
 	
+	@PostMapping("/{scheduleId}/remove")
+	public String remove(@PathVariable Long scheduleId,
+			RedirectAttributes redirectAttributes) {
+		Schedule schedule = scheduleService.findById(scheduleId);
+		Long memberId = schedule.getMember().getId();
+		
+		scheduleService.deleteById(scheduleId);
+		
+		redirectAttributes.addAttribute("memberId",memberId);
+		
+		log.info("remove");
+		
+		return "redirect:/schedule/{memberId}";
+	}
 }

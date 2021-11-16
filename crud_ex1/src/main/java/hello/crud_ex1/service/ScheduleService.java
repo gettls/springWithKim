@@ -19,11 +19,13 @@ public class ScheduleService {
 	private final ScheduleRepository scheduleRepository;
 	private final MemberRepository memberRepository;
 	
+	@Transactional
 	public Long add(Schedule schedule) {
 		scheduleRepository.save(schedule);
 		return schedule.getId();
 	}
 	
+	@Transactional
 	public Long update(Long id, Schedule updateSchedule) {
 		Schedule schedule = scheduleRepository.findOne(id);
 		schedule.setDate(updateSchedule.getDate());
@@ -40,6 +42,7 @@ public class ScheduleService {
 		return scheduleRepository.findOne(id);
 	}
 	
+	@Transactional
 	public void deleteById(Long id) {
 		scheduleRepository.delete(id);
 	}

@@ -44,9 +44,12 @@ public class MemberRepository {
 				.orElse(null);
 	}
 	
-//	public List<Schedule> findSchedule(Long id){
-//		return em.createQuery("select m.schedules from Member m where m.id = :id", Schedule.class)
-//				.setParameter("id", id)
-//				.getResultList();
-//	}		
+	public List<Schedule> findSchedule(Long id){
+		return em.createQuery(
+				"select s from Schedule s"
+				+ "fetch join s.member m"
+				+ "where m.id = :id", Schedule.class)
+				.setParameter("id", id)
+				.getResultList();
+	}		
 }

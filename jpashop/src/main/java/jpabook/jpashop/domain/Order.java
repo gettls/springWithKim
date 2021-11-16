@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.BatchSize;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +37,12 @@ public class Order {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    private LocalDateTime orderDate; //주문시간
+    private LocalDateTime orderDate; //二쇰Ц�떆媛�
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status; //주문상태 [ORDER, CANCEL]
+    private OrderStatus status; //二쇰Ц�긽�깭 [ORDER, CANCEL]
 
-    //==연관관계 메서드==//
+    //==�뿰愿�愿�怨� 硫붿꽌�뱶==//
     public void setMember(Member member) {
         this.member = member;
         member.getOrders().add(this);
@@ -55,7 +58,7 @@ public class Order {
         delivery.setOrder(this);
     }
 
-    //==생성 메서드==//
+    //==�깮�꽦 硫붿꽌�뱶==//
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
         Order order = new Order();
         order.setMember(member);
@@ -68,13 +71,13 @@ public class Order {
         return order;
     }
 
-    //==비즈니스 로직==//
+    //==鍮꾩쫰�땲�뒪 濡쒖쭅==//
     /**
-     * 주문 취소
+     * 二쇰Ц 痍⑥냼
      */
     public void cancel() {
         if (delivery.getStatus() == DeliveryStatus.COMP) {
-            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
+            throw new IllegalStateException("�씠誘� 諛곗넚�셿猷뚮맂 �긽�뭹�� 痍⑥냼媛� 遺덇��뒫�빀�땲�떎.");
         }
 
         this.setStatus(OrderStatus.CANCEL);
@@ -83,9 +86,9 @@ public class Order {
         }
     }
 
-    //==조회 로직==//
+    //==議고쉶 濡쒖쭅==//
     /**
-     * 전체 주문 가격 조회
+     * �쟾泥� 二쇰Ц 媛�寃� 議고쉶
      */
     public int getTotalPrice() {
         int totalPrice = 0;

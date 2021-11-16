@@ -30,6 +30,12 @@
 			<tr th:each="schedule : ${schedules}">
 				<td><a th:text="${schedule.name}" th:href="@{|/schedule/${schedule.id}/edit|}">이름</a></td>
 				<td th:text="${#temporals.format(schedule.date, 'yyyy년 MM월 dd일 HH시 mm분')}">날짜</td>
+				<td>
+					<form method="post" th:action="@{|/schedule/${schedule.id}/remove|}">
+					<input id="remove" value="삭제" 
+					class="btn btn-primary" type="submit"/> 
+					</form>
+				</td>
 			</tr>
 			</tbody>
 		</table>
