@@ -45,7 +45,7 @@ public class OrderRepository {
             String jpql = "select o from Order o join o.member m";
             boolean isFirstCondition = true;
 
-        //二쇰Ц �긽�깭 寃��깋
+        //雅뚯눖揆 占쎄맒占쎄묶 野껓옙占쎄퉳
         if (orderSearch.getOrderStatus() != null) {
             if (isFirstCondition) {
                 jpql += " where";
@@ -56,7 +56,7 @@ public class OrderRepository {
             jpql += " o.status = :status";
         }
 
-        //�쉶�썝 �씠由� 寃��깋
+        //占쎌돳占쎌뜚 占쎌뵠�뵳占� 野껓옙占쎄퉳
         if (StringUtils.hasText(orderSearch.getMemberName())) {
             if (isFirstCondition) {
                 jpql += " where";
@@ -91,12 +91,12 @@ public class OrderRepository {
 
         List<Predicate> criteria = new ArrayList<>();
 
-        //二쇰Ц �긽�깭 寃��깋
+        //雅뚯눖揆 占쎄맒占쎄묶 野껓옙占쎄퉳
         if (orderSearch.getOrderStatus() != null) {
             Predicate status = cb.equal(o.get("status"), orderSearch.getOrderStatus());
             criteria.add(status);
         }
-        //�쉶�썝 �씠由� 寃��깋
+        //占쎌돳占쎌뜚 占쎌뵠�뵳占� 野껓옙占쎄퉳
         if (StringUtils.hasText(orderSearch.getMemberName())) {
             Predicate name =
                     cb.like(m.<String>get("name"), "%" + orderSearch.getMemberName() + "%");
@@ -117,13 +117,14 @@ public class OrderRepository {
     }
 
     public List<Order> findAllWithItem() {
-        return em.createQuery(
-                "select distinct o from Order o" +
-                        " join fetch o.member m" +
-                        " join fetch o.delivery d" +
-                        " join fetch o.orderItems oi" +
-                        " join fetch oi.item i", Order.class)
-                .getResultList();
+    	return em.createQuery(
+    			"select o from Order o" +
+    			"join fetch o.member m" +
+    			"join fetch o.delivery d"+
+    			"join fetch o.orderItems oi"+
+    			"join fetch oi.item i", Order.class)
+    			.getResultList();
+    	
     }
 
     public List<Order> findAllWithMemberDelivery(int offset, int limit) {
