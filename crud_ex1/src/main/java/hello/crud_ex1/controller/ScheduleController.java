@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,19 +52,19 @@ public class ScheduleController {
 	
 	@GetMapping("/{memberId}/add")
 	public String addForm(@PathVariable Long memberId, Model model) {
-		Schedule schedule = new Schedule();
-		model.addAttribute("schedule",schedule);
+		model.addAttribute("schedule",new Schedule());
 		return "schedule/addForm";
 	}
 	
 	@PostMapping("/{memberId}/add")
-	public String add(@Validated @ModelAttribute ScheduleAddForm form, @PathVariable Long memberId,
-			BindingResult bindingResult) {
+	public String add(@Validated @ModelAttribute("schedule") ScheduleAddForm form,
+			BindingResult bindingResult,
+			@PathVariable Long memberId) {
+		log.info("form = {}", form.getClass());
 		if(bindingResult.hasErrors()) {
 			log.info("바인딩에러");
 			return "schedule/addForm";
 		}
-		log.info("date = {}", form.getDate());
 		Member member = memberService.findOne(memberId);
 		Schedule schedule = new Schedule();
 		schedule.setName(form.getName());
@@ -85,23 +87,22 @@ public class ScheduleController {
 	}
 	
 	@PostMapping("/{scheduleId}/edit")
-	public String edit(@Validated @ModelAttribute ScheduleEditForm form, 
-			@PathVariable Long scheduleId, BindingResult bindingResult
-			, RedirectAttributes redirectAttributes) {
+	public String edit(@Validated @ModelAttribute("schedule") ScheduleEditForm form, BindingResult bindingResult,
+			@PathVariable Long scheduleId, RedirectAttributes redirectAttributes, Model model) {
+		Schedule schedule = scheduleService.findById(scheduleId);
+		Member member = schedule.getMember();
 		if(bindingResult.hasErrors()) {
 			log.info("바인딩 에러");
+			model.addAttribute("member",member);
 			return "schedule/editForm";
 		}
-		Schedule schedule = scheduleService.findById(scheduleId);
-		Long memberId = schedule.getMember().getId();
+		
 		schedule.setDate(form.getDate());
 		schedule.setName(form.getName());
 		scheduleService.update(scheduleId, schedule);
-		
-		redirectAttributes.addAttribute("memberId", memberId);
-		
 		log.info("schedule = {}", schedule);
 		log.info("redirect to list");
+		redirectAttributes.addAttribute("memberId",member.getId());
 		return "redirect:/schedule/{memberId}";
 	}
 	

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import hello.crud_ex1.domain.Member;
 import hello.crud_ex1.domain.MemberRepository;
 import hello.crud_ex1.service.MemberService;
+import hello.crud_ex1.web.schedule.form.MemberAddForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,12 +29,18 @@ public class MemberController {
 	}
 	
 	@PostMapping("/add")
-	public String save(@Validated @ModelAttribute Member member, BindingResult bindingResult) {
+	public String save(@Validated @ModelAttribute("member") MemberAddForm form, BindingResult bindingResult) {
+		
 		if(bindingResult.hasErrors()) {
+			log.info("binding error");
 			return "members/MemberAddForm";
 		}
-		log.info("member add");
+		Member member = new Member();
+		member.setLoginId(form.getLoginId());
+		member.setName(form.getName());
+		member.setPassword(form.getPassword());
 		memberService.save(member);
+		
 		return "redirect:/";
 	}
 }

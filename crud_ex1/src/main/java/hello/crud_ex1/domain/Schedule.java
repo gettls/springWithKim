@@ -28,7 +28,7 @@ public class Schedule {
 	@Column(name = "SCHEDULE_ID")
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="MEMBER_ID")
 	private Member member;
 	private String name;

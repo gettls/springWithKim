@@ -26,7 +26,7 @@ public class Member {
 	private String loginId;
 	private String password;
 	
-	
+	@BatchSize(size=100)
 	@OneToMany(mappedBy = "member")
 	private List<Schedule> schdules = new ArrayList<Schedule>();
 }

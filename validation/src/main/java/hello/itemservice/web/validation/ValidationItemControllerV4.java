@@ -47,26 +47,26 @@ public class ValidationItemControllerV4 {
 	public String addItem(@Validated @ModelAttribute("item") ItemSaveForm form, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 		
-		// 특정 필드 예외가 복합 룰 검증
+		// �듅�젙 �븘�뱶 �삁�쇅媛� 蹂듯빀 猷� 寃�利�
 		if (form.getPrice() != null && form.getQuantity() != null) {
 			int resultPrice = form.getPrice() * form.getQuantity();
 			if (resultPrice < 10000) {
 				bindingResult.reject("totalPriceMin", new Object[] {10000, resultPrice}, null);
 			}
 		}
-		// 검증 실패하면 다시 입력 폼으로
+		// 寃�利� �떎�뙣�븯硫� �떎�떆 �엯�젰 �뤌�쑝濡�
 		if (bindingResult.hasErrors()) {
 			log.info("errors={}", bindingResult);
 			return "validation/v4/addForm";
 		}
 		
-		// Repository에 저장하기 위해 Form->Item으로 변경이 필요함
+		// Repository�뿉 ���옣�븯湲� �쐞�빐 Form->Item�쑝濡� 蹂�寃쎌씠 �븘�슂�븿
 		Item item = new Item();
 		item.setItemName(form.getItemName());
 		item.setPrice(form.getPrice());
 		item.setQuantity(form.getQuantity());
 		
-		// 성공 로직
+		// �꽦怨� 濡쒖쭅
 		Item savedItem = itemRepository.save(item);
 		redirectAttributes.addAttribute("itemId", savedItem.getId());
 		redirectAttributes.addAttribute("status", true);
@@ -83,7 +83,7 @@ public class ValidationItemControllerV4 {
 	@PostMapping("/{itemId}/edit")
 	public String edit(@PathVariable Long itemId, @Validated @ModelAttribute("item") ItemUpdateForm form, BindingResult bindingResult) {
 
-		// 특정 필드 예외가 복합 룰 검증
+		// �듅�젙 �븘�뱶 �삁�쇅媛� 蹂듯빀 猷� 寃�利�
 		if (form.getPrice() != null && form.getQuantity() != null) {
 			int resultPrice = form.getPrice() * form.getQuantity();
 			if (resultPrice < 10000) {

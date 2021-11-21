@@ -4,6 +4,15 @@
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 <title> 스케줄 등록 </title>
 </head>
 <body>
@@ -16,11 +25,15 @@
 		<form th:action method="post" th:object="${schedule}">
 			<div>
 				<label for="name">스케줄 제목</label>
-				<input type="text" id="name" class="form-control" th:field="*{name}">
-			<div>
+				<input type="text" id="name" th:errorclass="field-error" 
+				class="form-control" th:field="*{name}">
+				<div class="field-error" th:errors="*{name}"> incorrect</div>	
 			</div>
+			<div>
 				<label for="date">스케줄 날짜</label>
-				<input type="datetime-local" id="date" class="form-control" th:field="*{date}">
+				<input type="datetime-local" id="date" th:errorclass="field-error" 
+				class="form-control" th:field="*{date}">
+				<div class="field-error" th:errors="*{date}"> incorrect</div>
 			</div>
 			
 			<hr>
